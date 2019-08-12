@@ -36,3 +36,5 @@ req["Content-Type"] = "text/json; charset=utf-8"
 req.body = messageArray.to_json
 
 res = http.request(req)
+
+puts res.code, res.msg, res.body
