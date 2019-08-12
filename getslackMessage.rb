@@ -17,11 +17,13 @@ messages = Slack.channels_history(channel: ENV["CHANNEL_ID"])['messages']
 # 必要なフィールドのみで新しい配列を生成
 messageArray = messages.map do |message|
   messageHash = {}
-  messageHash["id"] = message["client_msg_id"]
-  messageHash["type"] = message["type"]
-  messageHash["ts"] = message["ts"]
-  messageHash["user"] = message["user"]
-  messageHash["text"] = message["text"]
+  if message["client_msg_id"] != nil
+    messageHash["id"] = message["client_msg_id"]
+    messageHash["type"] = message["type"]
+    messageHash["ts"] = message["ts"]
+    messageHash["user"] = message["user"]
+    messageHash["text"] = message["text"]
+  end
 
   messageHash
 end
