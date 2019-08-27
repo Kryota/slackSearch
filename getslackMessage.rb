@@ -23,6 +23,8 @@ messageArray = messages.map do |message|
     messageHash["ts"] = message["ts"]
     messageHash["user"] = message["user"]
     messageHash["text"] = message["text"]
+  else
+    next
   end
 
   messageHash
@@ -33,7 +35,7 @@ uri = URI.parse("http://localhost:8983/solr/slackCore/update?commit=true")
 http = Net::HTTP.new(uri.host, uri.port)
 req = Net::HTTP::Post.new(uri.request_uri)
 req["Content-Type"] = "text/json; charset=utf-8"
-req.body = messageArray.to_json
+req.body = messageArray.compact.to_json
 
 res = http.request(req)
 
